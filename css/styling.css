@@ -20,7 +20,7 @@ body {
     background: url(../assets/kate-upton-bg.jpg);
 }
 
-.flavors-container {
+.desserts-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     max-width: 100vw;
@@ -29,24 +29,24 @@ body {
     font-family: 'Nerko One', cursive;
 }
 
-.main-flav {
+.main-dessert {
     background: rgba(0,0,0,0.4);
     padding: var(--size-16);
 }
 
-.main-flav header {
+.main-dessert header {
     font-size: var(--size-32);
 }
 
-.main-flav p {
+.main-dessert p {
     font-size: var(--size-24);
 }
 
-.flav-img-container {
+.dessert-img-container {
     max-width: 100%;
 }
 
-.flav-img-container img {
+.dessert-img-container img {
     width: 100%;
     max-width: 100%;
     /* height: var(--size-256); */
