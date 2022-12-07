@@ -12,13 +12,33 @@
 
     <!--LINK TO FONTAWESOME KIT-->
     <script src="https://kit.fontawesome.com/5f2ab24bd1.js" crossorigin="anonymous"></script>
+
+    <!--LINK TO GOOGLE FONT-->
+    <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="content-container">
         <h1>Here's a bunch of ice-cream flavors. Which ones are your favorites?</h1>
-        <h2>View your favorites</h2>
+        <h2 data-open="favs">View your favorites</h2>
         <main>
             <div id="flavors-container-homepage" class='flavors-container'></div>
+            <div id="favs" class="full-site-modal page-block" data-animation="zoomInOut">
+                <div class="container-fluid">
+                    <div id="modal-header-container">
+                        <header class="modal-header">
+                            <div class="header-sort-btns-container">
+                                <h3>Favorites</h3>
+                                <div class="sort-btns-container-favs">
+                                    <button class="sort-btn" id="alphabetical-sort-favs" title='Sort Alphabetically'>A-Z</button>
+                                    <button class="sort-btn" id="reverse-alphabetical-sort-favs" title='Sort Reverse-Alphabetically'>Z-A</button>
+                                </div>
+                            </div>
+                            <i class="fas fa-times" data-close></i>
+                        </header>
+                    </div>
+                    <div id="favs-modal-body"></div>
+                </div>
+            </div>
         </main>
     </div>
     <script src="./js/main.js"></script>
