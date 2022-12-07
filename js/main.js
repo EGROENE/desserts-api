@@ -22,7 +22,7 @@ async function getDesserts() {
             + "<img src='" + dessert.photoUrl + "'>"
             + "</div>"
             + "<header>" + dessert.name + "</header>"
-            + "<header> Category: " + dessert.category + "</header>"
+            + "<header> Category: " + dessert.category.replace(/_/g, ' ') + "</header>"
             + "<p>" + dessert.description + "</header>"
             + "</div>"
     }
