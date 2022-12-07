@@ -26,3 +26,24 @@ async function getFlavors() {
     }
 }
 getFlavors();
+
+// FAV MODAL JS
+const modalOpen = '[data-open]';
+const modalClose = '[data-close]';
+const isVisible = 'is-visible';
+const openModal = document.querySelectorAll(modalOpen);
+const closeModal = document.querySelectorAll(modalClose);
+
+// Modal/Full site modal 'open buttons'
+for (const elem of openModal) {
+    elem.addEventListener('click', function() {
+        document.getElementById('favs').classList.add(isVisible);
+    })
+}
+
+// Remove isVisible class from elements in HTML with data-close attribute upon click:
+for (const elem of closeModal) {
+    elem.addEventListener('click', function() {
+        document.getElementById('favs').classList.remove(isVisible);
+    })
+}
