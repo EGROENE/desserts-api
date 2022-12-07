@@ -1,3 +1,178 @@
+:root {
+    --size-8: 0.5rem;
+    --size-12: 0.75rem;
+    --size-16: 1rem;
+    --size-20: 1.25rem;
+    --size-24: 1.5rem;
+    --size-28: 1.75rem;
+    --size-32: 2rem;
+    --size-36: 2.25rem;
+    --size-40: 2.5rem;
+    --size-42: 2.75rem;
+    --size-48: 3rem;
+    --size-56: 3.5rem;
+    --size-64: 4rem;
+    --size-128: 8rem;
+    --size-256: 16rem:
+}
+
 body {
     background: url(../assets/kate-upton-bg.jpg);
+}
+
+.flavors-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100vw;
+    gap: var(--size-12);
+    color: white;
+    font-family: 'Nerko One', cursive;
+}
+
+.main-flav {
+    background: rgba(0,0,0,0.4);
+    padding: var(--size-16);
+}
+
+.main-flav header {
+    font-size: var(--size-32);
+}
+
+.main-flav p {
+    font-size: var(--size-24);
+}
+
+.flav-img-container {
+    max-width: 100%;
+}
+
+.flav-img-container img {
+    width: 100%;
+    max-width: 100%;
+    /* height: var(--size-256); */
+}
+
+/* MODAL JS STYLING */
+.page-block {
+    background-color: rebeccapurple;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    cursor: pointer;
+}
+
+.modal, 
+.full-site-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    transition: all 0.35s ease-in;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 200;
+    overflow-y: auto;
+}
+
+.modal-dialog {
+    max-width: 800px;
+    max-height: 80vh;
+    background: var(--bg-panel);
+    color: var(--color-text-base);
+    overflow: hidden;
+    padding: 1.25rem 1.85rem;
+    border-radius: 5px;
+    cursor: default;
+}
+
+.modal-header {
+    display: flex;
+    padding-bottom: 1rem;
+    justify-content: space-between;
+}
+
+.modal-header h3 {
+    color: var(--color-text-base);
+    font-family: 'Potterfont', serif;
+}
+
+.modal-header .header-sort-btns-container {
+    text-align: left;
+}
+
+.favs-house-totals-container {
+    display: flex;
+    font-size: var(--size-24);
+    width: 115%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: var(--size-8) 0 -1.5rem 0;
+}
+
+.modal-header .fa-times {
+    font-size: 1.5rem;
+    transition: all 0.5s ease-in;
+}
+
+.modal-header .fa-times:hover {
+    transition: scale(1.1);
+    cursor: pointer;
+}
+
+.full-site-modal.is-visible,
+.modal.is-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+}
+
+.modal-body .img-wrapper {
+    max-width: 200px;
+    margin-right: 0.75rem;
+}
+
+.modal-body .img-wrapper img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    height: 200px;
+}
+
+[data-animation = "zoomInOut"].full-site-modal {
+    transform: scale(0.2);
+}
+
+[data-animation = "zoomInOut"].full-site-modal.is-visible {
+    transform: none;
+}
+
+/* ANIMATION FOR PF ITEM MODALS */
+[data-animation="slideInOutTop"] .modal-dialog {
+    opacity: 0;
+    transition: 0.5s;
+}
+
+[data-animation="slideInOutTop"].is-visible .modal-dialog {
+    opacity: 1;
+    transition-delay: 0.2s;
+}
+
+[data-animation="slideInOutTop"] .modal-dialog {
+    transform: translateY(-100%);
+}
+
+[data-animation="zoomInOut"].full-site-modal.is-visible,
+[data-animation="slideInOutTop"].is-visible .modal-dialog {
+    transform: none;
+    overflow-y: auto;
 }
