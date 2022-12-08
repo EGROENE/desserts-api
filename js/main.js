@@ -22,6 +22,7 @@ async function popSections() {
     await getDesserts();
     const dessertsHomepage = document.getElementById('desserts-container-homepage');
     const dessertsFavs = document.getElementById('desserts-container-favs');
+
     for (let dessert of mainArray) {
         // This consolidation can be seen around min 17 of Andrey's video
         [dessertsHomepage, dessertsFavs].map((section) => {
@@ -32,7 +33,7 @@ async function popSections() {
             section.innerHTML += 
             "<div class='dessert'>"
                 + "<div class='dessert-img-container'>"
-                + "<i class='fas fa-" + params[0] + "'title='" + params[1] + "'></i>"
+                + "<button class='favs-btn' title='" + params[1] + "'><i class='fas fa-" + params[0] + "'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
                 + "</div>"
                 + "<header>" + dessert.name + "</header>"
@@ -41,8 +42,38 @@ async function popSections() {
             + "</div>"
         });
     }
-    console.log(dessertsHomepage);
-    console.log(dessertsFavs);
+
+    // ADD / DEL FROM HOMEPAGE, FAVS
+    // Should be async, awaiting popSections:
+    const allDesserts = document.querySelectorAll('.dessert');
+    const main = document.getElementById('desserts-container-homepage');
+    const favs = document.getElementById('desserts-container-favs');
+    // Get all fav btns:
+    const favBtns = document.querySelectorAll('.favs-btn');
+
+    // Add the event listener to each fav-btn to add/delete
+    favBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+        const direction = btn.parentElement.parentElement.parentElement.id === 'main' ? 'toFavs' : 'toMain';
+        updateCollections(btn.id, direction);
+        console.log('hi')
+        });
+    });
+
+    // Function that updates collections:
+    const updateCollections = (id, direction) => {
+        // Directions to remove/append 'toFavs' 'toMain'
+        let element;
+        const params = direction === 'toFavs' ? [main, favs] : [favs, main];
+    
+        Object.values(params[0].children).map((item) => {
+        if (item.id === id) {
+            element = item;
+            item.remove();
+            params[1].appendChild(element);
+        }
+        });
+    };
 }
 popSections();
 
