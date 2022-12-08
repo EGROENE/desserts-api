@@ -1,33 +1,50 @@
 //const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?category=Ice_Cream&limit=24';
 const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?limit=200';
-const dessertsHomepage = document.getElementById('desserts-container-homepage');
 
-// Add flavors from API to main array, populate homepage upon loading:
+let mainArray = [];
+
+// Add flavors from API to main array:
 async function getDesserts() {
     const response = await fetch(apiURL);
     const allDessertsArr = await response.json();
 
     // Add flavors to main array:
-    let mainArray = [];
+    /* let mainArray = []; */
     for (let i = 0; i < allDessertsArr.data.length; i+= 5) {
         mainArray.push(allDessertsArr.data[i]);
     }
     console.log(mainArray);
-
-    // Populate homepage from mainArray:
-    for (let dessert of mainArray) {
-        dessertsHomepage.innerHTML += 
-            "<div class='main-dessert'>"
-            + "<div class='dessert-img-container'>"
-            + "<img src='" + dessert.photoUrl + "'>"
-            + "</div>"
-            + "<header>" + dessert.name + "</header>"
-            + "<header> Category: " + dessert.category.replace(/_/g, ' ') + "</header>"
-            + "<p>" + dessert.description + "</header>"
-            + "</div>"
-    }
 }
-getDesserts();
+//getDesserts();
+
+// Function to populate homepage, favs modal:
+async function popSections() {
+    await getDesserts();
+    const dessertsHomepage = document.getElementById('desserts-container-homepage');
+    const dessertsFavs = document.getElementById('desserts-container-favs');
+    for (let dessert of mainArray) {
+        // This consolidation can be seen around min 17 of Andrey's video
+        [dessertsHomepage, dessertsFavs].map((section) => {
+            // Params are equal to one of the arrays, depending on whether the section is dessertsHomepage or not
+            const params = section === dessertsHomepage
+            ? ['heart', 'Add to Favorites']
+            : ['times', 'Remove from Favorites'];
+            section.innerHTML += 
+            "<div class='dessert'>"
+                + "<div class='dessert-img-container'>"
+                + "<i class='fas fa-" + params[0] + "'title='" + params[1] + "'></i>"
+                + "<img src='" + dessert.photoUrl + "'>"
+                + "</div>"
+                + "<header>" + dessert.name + "</header>"
+                + "<header> Category: " + dessert.category.replace(/_/g, ' ') + "</header>"
+                + "<p>" + dessert.description + "</p>"
+            + "</div>"
+        });
+    }
+    console.log(dessertsHomepage);
+    console.log(dessertsFavs);
+}
+popSections();
 
 // FAV MODAL JS
 const modalOpen = '[data-open]';
