@@ -74,7 +74,9 @@ async function toFavs() {
             // particular dessert has to be removed:
             dessertsArray.removeChild(dessert);
             // Add to favs modal:
-            dessertsFavs.appendChild(dessert)
+            btn.firstChild.classList.remove('fa-heart');
+            btn.firstChild.classList.add('fa-times');
+            dessertsFavs.appendChild(dessert);
         })
     }
 
