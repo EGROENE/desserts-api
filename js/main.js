@@ -17,11 +17,16 @@ async function getDesserts() {
 }
 //getDesserts();
 
+let dessertsHomepage = '';
+let dessertsFavs = '';
+
 // Function to populate homepage, favs modal:
 async function popSections() {
     await getDesserts();
-    const dessertsHomepage = document.getElementById('desserts-container-homepage');
-    const dessertsFavs = document.getElementById('desserts-container-favs');
+    /* const dessertsHomepage = document.getElementById('desserts-container-homepage');
+    const dessertsFavs = document.getElementById('favs'); */
+    dessertsHomepage = document.getElementById('desserts-container-homepage');
+    dessertsFavs = document.getElementById('desserts-container-favs');
     for (let dessert of mainArray) {
         // This consolidation can be seen around min 17 of Andrey's video
         //[dessertsHomepage, dessertsFavs].map((section) => {
@@ -42,8 +47,6 @@ async function popSections() {
             + "</div>"
         });
     }
-    console.log(dessertsHomepage);
-    console.log(dessertsFavs);
 }
 //popSections();
 
@@ -59,18 +62,22 @@ for (let btn of favBtns) {
 } */
 async function toFavs() {
     await popSections();
+    console.log(dessertsHomepage);
+    console.log(dessertsFavs);
+    // Del from homepage:
     let favBtns = document.querySelectorAll('.fav-btn');
     favBtns = Array.from(favBtns);
     for (let btn of favBtns) {
-        console.log('hi')
-        let btnIndex = favBtns.indexOf(btn);
         btn.addEventListener('click', function() {
             let dessertsArray = btn.parentElement.parentElement.parentElement;
             let dessert = btn.parentElement.parentElement
             // particular dessert has to be removed:
             dessertsArray.removeChild(dessert);
+            // Add to favs modal:
+            dessertsFavs.appendChild(dessert)
         })
     }
+
 }
 toFavs();
 
