@@ -60,7 +60,7 @@ for (let btn of favBtns) {
         dessertsArray.removeChild(dessertsArray.children[btnIndex]);
     })
 } */
-async function toFavs() {
+async function favsFunctionality() {
     await popSections();
     console.log(dessertsHomepage);
     console.log(dessertsFavs);
@@ -99,7 +99,7 @@ async function toFavs() {
     }
 
 }
-toFavs();
+favsFunctionality();
 
 // FAV MODAL JS
 const modalOpen = '[data-open]';
