@@ -50,16 +50,6 @@ async function popSections() {
 }
 //popSections();
 
-// Function to del from homepage, add to favs:
-/* const favBtns = document.querySelectorAll('.fav-btn');
-for (let btn of favBtns) {
-    console.log('hi')
-    let btnIndex = favBtns.indexOf(btn);
-    btn.addEventListener('click', function() {
-        let dessertsArray = btn.parentElement.parentElement.parentElement;
-        dessertsArray.removeChild(dessertsArray.children[btnIndex]);
-    })
-} */
 async function favsFunctionality() {
     await popSections();
     console.log(dessertsHomepage);
