@@ -76,7 +76,25 @@ async function toFavs() {
             // Add to favs modal:
             btn.firstChild.classList.remove('fa-heart');
             btn.firstChild.classList.add('fa-times');
+            btn.classList.remove('fav-btn');
+            btn.classList.add('del-fav-btn');
             dessertsFavs.appendChild(dessert);
+            // Put JS onclick EL to del from favs & add back to homepage here, since onclick of fav btn, the del-fav btn & its func is created from above onclick event:
+            let delFavBtns = document.querySelectorAll('.del-fav-btn');
+            delFavBtns = Array.from(delFavBtns);
+            for (let btn of delFavBtns) {
+                btn.addEventListener('click', function() {
+                    console.log('hi');
+                    let favDessertsArray = btn.parentElement.parentElement.parentElement;
+                    let favDessert = btn.parentElement.parentElement;
+                    favDessertsArray.removeChild(favDessert);
+                    btn.firstChild.classList.remove('fav-heart');
+                    btn.firstChild.classList.add('fav-btn');
+                    btn.classList.remove('del-fav-btn');
+                    btn.classList.add('fav-btn');
+                    dessertsArray.appendChild(favDessert);
+                })
+            }
         })
     }
 
