@@ -38,7 +38,7 @@ async function popSections() {
             section.innerHTML += 
             "<div class='dessert'>"
                 + "<div class='dessert-img-container'>"
-                + "<button class='fav-btn'><i class='fas fa-" + params[0] + "'title='" + params[1] + "'></i></button>"
+                + "<button class='fav-btn' title='" + params[1] + "'><i class='fas fa-" + params[0] + "'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
                 + "</div>"
                 + "<header>" + dessert.name + "</header>"
@@ -67,18 +67,24 @@ async function favsFunctionality() {
     // Del from homepage:
     let favBtns = document.querySelectorAll('.fav-btn');
     favBtns = Array.from(favBtns);
+    console.log(favBtns.length);
     for (let btn of favBtns) {
         btn.addEventListener('click', function() {
             let dessertsArray = btn.parentElement.parentElement.parentElement;
             let dessert = btn.parentElement.parentElement
             // particular dessert has to be removed:
             dessertsArray.removeChild(dessert);
+            console.log(favBtns.length);
             // Add to favs modal:
-            btn.firstChild.classList.remove('fa-heart');
-            btn.firstChild.classList.add('fa-times');
-            btn.classList.remove('fav-btn');
-            btn.classList.add('del-fav-btn');
+            if (btn.firstChild.classList.contains('fa-heart')) {
+                btn.firstChild.classList.remove('fa-heart');
+                btn.firstChild.classList.add('fa-times');
+                btn.title = 'Remove from Favorites';
+                btn.classList.remove('fav-btn');
+                btn.classList.add('del-fav-btn');
+            }
             dessertsFavs.appendChild(dessert);
+            
             // Put JS onclick EL to del from favs & add back to homepage here, since onclick of fav btn, the del-fav btn & its func is created from above onclick event:
             let delFavBtns = document.querySelectorAll('.del-fav-btn');
             delFavBtns = Array.from(delFavBtns);
@@ -88,11 +94,13 @@ async function favsFunctionality() {
                     let favDessertsArray = btn.parentElement.parentElement.parentElement;
                     let favDessert = btn.parentElement.parentElement;
                     favDessertsArray.removeChild(favDessert);
-                    btn.firstChild.classList.remove('fav-heart');
-                    btn.firstChild.classList.add('fav-btn');
+                    btn.firstChild.classList.remove('fa-times');
+                    btn.firstChild.classList.add('fa-heart');
+                    btn.title = 'Add to Favorites';
                     btn.classList.remove('del-fav-btn');
                     btn.classList.add('fav-btn');
                     dessertsArray.appendChild(favDessert);
+                    console.log(favBtns.length);
                 })
             }
         })
