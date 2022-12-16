@@ -1,103 +1,73 @@
 //const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?category=Ice_Cream&limit=24';
 const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?limit=200';
 
-let mainArray = [];
+let main = document.getElementById('desserts-container-homepage');
+let favs = document.getElementById('desserts-container-favs');
 
 // Add flavors from API to main array:
 async function getDesserts() {
     const response = await fetch(apiURL);
-    const allDessertsArr = await response.json();
+    let allDessertsArr = await response.json();
 
     // Add flavors to main array:
-    /* let mainArray = []; */
+    let mainArray = [];
     for (let i = 0; i < allDessertsArr.data.length; i+= 5) {
         mainArray.push(allDessertsArr.data[i]);
     }
     console.log(mainArray);
-}
-//getDesserts();
 
-let dessertsHomepage = '';
-let dessertsFavs = '';
-
-// Function to populate homepage, favs modal:
-async function popSections() {
-    await getDesserts();
-    /* const dessertsHomepage = document.getElementById('desserts-container-homepage');
-    const dessertsFavs = document.getElementById('favs'); */
-    dessertsHomepage = document.getElementById('desserts-container-homepage');
-    dessertsFavs = document.getElementById('desserts-container-favs');
+    // POPULATE HOMEPAGE HERE
     for (let dessert of mainArray) {
-        // This consolidation can be seen around min 17 of Andrey's video
-        //[dessertsHomepage, dessertsFavs].map((section) => {
-        [dessertsHomepage].map((section) => {
-            // Params are equal to one of the arrays, depending on whether the section is dessertsHomepage or not
-            const params = section === dessertsHomepage
-            ? ['heart', 'Add to Favorites']
-            : ['times', 'Remove from Favorites'];
-            section.innerHTML += 
-            "<div class='dessert'>"
+        main.innerHTML +=
+        "<div class='dessert'>"
                 + "<div class='dessert-img-container'>"
-                + "<button class='fav-btn' title='" + params[1] + "'><i class='fas fa-" + params[0] + "'></i></button>"
+                + "<button class='fav-btn'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
                 + "</div>"
                 + "<header>" + dessert.name + "</header>"
                 + "<header> Category: " + dessert.category.replace(/_/g, ' ') + "</header>"
                 + "<p>" + dessert.description + "</p>"
             + "</div>"
-        });
     }
-}
-//popSections();
 
-async function favsFunctionality() {
-    await popSections();
-    console.log(dessertsHomepage);
-    console.log(dessertsFavs);
-    // Del from homepage:
+    let allDesserts = document.querySelectorAll('.dessert');
+    console.log(allDesserts);
     let favBtns = document.querySelectorAll('.fav-btn');
-    favBtns = Array.from(favBtns);
-    console.log(favBtns.length);
-    for (let btn of favBtns) {
-        btn.addEventListener('click', function() {
-            let dessertsArray = btn.parentElement.parentElement.parentElement;
-            let dessert = btn.parentElement.parentElement
-            // particular dessert has to be removed:
-            dessertsArray.removeChild(dessert);
-            console.log(favBtns.length);
-            // Add to favs modal:
-            if (btn.firstChild.classList.contains('fa-heart')) {
-                btn.firstChild.classList.remove('fa-heart');
-                btn.firstChild.classList.add('fa-times');
-                btn.title = 'Remove from Favorites';
-                btn.classList.remove('fav-btn');
-                btn.classList.add('del-fav-btn');
-            }
-            dessertsFavs.appendChild(dessert);
-            
-            // Put JS onclick EL to del from favs & add back to homepage here, since onclick of fav btn, the del-fav btn & its func is created from above onclick event:
-            let delFavBtns = document.querySelectorAll('.del-fav-btn');
-            delFavBtns = Array.from(delFavBtns);
-            for (let btn of delFavBtns) {
-                btn.addEventListener('click', function() {
-                    console.log('hi');
-                    let favDessertsArray = btn.parentElement.parentElement.parentElement;
-                    let favDessert = btn.parentElement.parentElement;
-                    favDessertsArray.removeChild(favDessert);
-                    btn.firstChild.classList.remove('fa-times');
-                    btn.firstChild.classList.add('fa-heart');
-                    btn.title = 'Add to Favorites';
-                    btn.classList.remove('del-fav-btn');
-                    btn.classList.add('fav-btn');
-                    dessertsArray.appendChild(favDessert);
-                    console.log(favBtns.length);
-                })
-            }
-        })
-    }
+    console.log(favBtns);
 
+    favBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            console.log('hi')
+            const direction = btn.parentElement.parentElement.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
+            updateCollections(btn.id, direction);
+        })
+    });
+
+    const updateCollections = (id, direction) => {
+        // Directions to remove/append 'toFavs' 'toMain'
+        let element;
+        const params = direction === 'toFavs' ? [main, favs] : [favs, main];
+
+
+        Object.values(params[0].children).map((item) => {
+            if (item.id === id) {
+              element = item;
+              item.remove();
+              const icon = element.getElementsByClassName('icon')[0];
+              console.log(icon.classList);
+              const classesList = Object.values(icon.classList).includes(
+                'fa-heart'
+              )
+                ? ['fa-heart', 'fa-times']
+                : ['fa-times', 'fa-heart'];
+              icon.classList.remove(classesList[0]);
+              icon.classList.add(classesList[1]);
+              params[1].appendChild(element);
+            }
+          });
+      };
 }
-favsFunctionality();
+getDesserts();
 
 // FAV MODAL JS
 const modalOpen = '[data-open]';
