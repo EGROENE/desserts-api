@@ -3,18 +3,20 @@ const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?limit=200';
 let main = document.getElementById('desserts-container-homepage');
 let favs = document.getElementById('desserts-container-favs');
 
-// Add flavors from API to main array:
+// Function to call data from API, perform subsequent actions:
 async function getDesserts() {
+    // Call API & convert to json:
     const response = await fetch(apiURL);
     let allDessertsArr = await response.json();
 
-    // Add flavors to main array:
+    // Add data from API to mainArray:
+    // mainArray() will be used to populate homepage upon pageload
     let mainArray = [];
     for (let i = 0; i < allDessertsArr.data.length; i+= 5) {
         mainArray.push(allDessertsArr.data[i]);
     }
 
-    // POPULATE HOMEPAGE HERE
+    // Populate homepage:
     for (let dessert of mainArray) {
         main.innerHTML +=
         "<div id='" + dessert._id + "' class='dessert'>"
@@ -28,35 +30,52 @@ async function getDesserts() {
             + "</div>"
     }
 
+    // Get all favBtns, add EL for adding/removing functionality:
     let favBtns = document.querySelectorAll('.fav-btn');
-
     favBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
             item = btn.parentElement.parentElement;
+            // If id is 'desserts-container-array', toFavs set as the direction. Otherwise, toMain is set.
             const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
             updateCollections(item.id, direction);
         })
     });
 
+    // Function that adds/removes the individual desserts from collections:
     const updateCollections = (id, direction) => {
-        let element;
+        let element; // see element = item below
+        
+        // If direction is toFavs, [main, favs] are the params, and vice versa:
         const params = direction === 'toFavs' ? [main, favs] : [favs, main]
 
+        // Map thru the children of main or favs by item:
         Object.values(params[0].children).map((item) => {
             // item.id is from the html originally generated after API was called
             // Below checks if id from allDesserts item is equal to the item from params[0] (one of the collections) - this makes the function apply only to the particular dessert
             if (item.id === id) {
-                console.log(item)
+                // This var stores the value of item, even after it is removed. Nothing will be added to favs otherwise.
                 element = item;
+
+                // Remove item from particular collection:
                 item.remove();
+
+                // Gets first element of 'element' that has class name 'icon':
                 const icon = element.getElementsByClassName('icon')[0];
-                const iconList = Object.values(icon.classList).includes(
-                    'fa-heart'
-                )
+
+                // icon.classList returns an object like this: {0: 'icon', 1: 'fas', 2: 'fa-times'}
+                // So, access only the values of this object. If 'fa-heart' is included in these values, iconList is set to ['fa-heart', 'fa-times]. If not, it's set to ['fa-times', 'fa-heart']
+                console.log(icon.classList)
+                const iconList = Object.values(icon.classList).includes('fa-heart')
                     ? ['fa-heart', 'fa-times']
                     : ['fa-times', 'fa-heart'];
+
+                // If current icon is 'fa-heart', it is removed when favs btn is clicked...
                 icon.classList.remove(iconList[0]);
+
+                // ... and replaced with the alternative, which is 'fa-times' in this case, and vice versa.
                 icon.classList.add(iconList[1]);
+
+                // Element is added to either main or favs, depending again on the direction (see 1st part of updateCollections())
                 params[1].appendChild(element);
             }
           });
