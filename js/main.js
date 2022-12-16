@@ -13,11 +13,9 @@ async function getDesserts() {
     for (let i = 0; i < allDessertsArr.data.length; i+= 5) {
         mainArray.push(allDessertsArr.data[i]);
     }
-    console.log(mainArray);
 
     // POPULATE HOMEPAGE HERE
     for (let dessert of mainArray) {
-        //console.log(dessert)
         main.innerHTML +=
         "<div id='" + dessert._id + "' class='dessert'>"
                 + "<div class='dessert-img-container'>"
@@ -30,14 +28,10 @@ async function getDesserts() {
             + "</div>"
     }
 
-    let allDesserts = document.querySelectorAll('.dessert');
-    console.log(allDesserts);
     let favBtns = document.querySelectorAll('.fav-btn');
-    console.log(favBtns);
 
     favBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-            console.log('hi')
             item = btn.parentElement.parentElement;
             const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
             updateCollections(item.id, direction);
@@ -47,15 +41,13 @@ async function getDesserts() {
     const updateCollections = (id, direction) => {
         let element;
         const params = direction === 'toFavs' ? [main, favs] : [favs, main]
-        //console.log(id)
 
         Object.values(params[0].children).map((item) => {
-            // This id is from the html originally generated after API was called
+            // item.id is from the html originally generated after API was called
             // Below checks if id from allDesserts item is equal to the item from params[0] (one of the collections) - this makes the function apply only to the particular dessert
             if (item.id === id) {
                 console.log(item)
                 element = item;
-                //console.log(element)
                 item.remove();
                 const icon = element.getElementsByClassName('icon')[0];
                 const iconList = Object.values(icon.classList).includes(
@@ -65,7 +57,6 @@ async function getDesserts() {
                     : ['fa-times', 'fa-heart'];
                 icon.classList.remove(iconList[0]);
                 icon.classList.add(iconList[1]);
-                //console.log(element)
                 params[1].appendChild(element);
             }
           });
