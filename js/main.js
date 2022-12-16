@@ -1,4 +1,3 @@
-//const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?category=Ice_Cream&limit=24';
 const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?limit=200';
 
 let main = document.getElementById('desserts-container-homepage');
@@ -36,21 +35,14 @@ async function getDesserts() {
     let favBtns = document.querySelectorAll('.fav-btn');
     console.log(favBtns);
 
-    /* favBtns.forEach((btn) => {
+    favBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
             console.log('hi')
-            const direction = btn.parentElement.parentElement.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
-            updateCollections(btn.id, direction);
+            item = btn.parentElement.parentElement;
+            const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
+            updateCollections(item.id, direction);
         })
-    }); */
-
-    allDesserts.forEach((item) => {
-        //console.log(item.id)
-        item.addEventListener('click', () => {
-          const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
-          updateCollections(item.id, direction);
-        });
-      });
+    });
 
     const updateCollections = (id, direction) => {
         let element;
@@ -59,6 +51,7 @@ async function getDesserts() {
 
         Object.values(params[0].children).map((item) => {
             // This id is from the html originally generated after API was called
+            // Below checks if id from allDesserts item is equal to the item from params[0] (one of the collections) - this makes the function apply only to the particular dessert
             if (item.id === id) {
                 console.log(item)
                 element = item;
