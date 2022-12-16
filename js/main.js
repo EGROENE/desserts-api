@@ -21,7 +21,7 @@ async function getDesserts() {
         main.innerHTML +=
         "<div id='" + dessert._id + "' class='dessert'>"
                 + "<div class='dessert-img-container'>"
-                + "<button class='fav-btn'><i class='icon fas fa-heart'></i></button>"
+                + "<button class='fav-btn' title='Add to Favorites'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
                 + "</div>"
                 + "<header>" + dessert.name + "</header>"
@@ -37,6 +37,7 @@ async function getDesserts() {
             item = btn.parentElement.parentElement;
             // If id is 'desserts-container-array', toFavs set as the direction. Otherwise, toMain is set.
             const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
+
             updateCollections(item.id, direction);
         })
     });
@@ -44,7 +45,7 @@ async function getDesserts() {
     // Function that adds/removes the individual desserts from collections:
     const updateCollections = (id, direction) => {
         let element; // see element = item below
-        
+
         // If direction is toFavs, [main, favs] are the params, and vice versa:
         const params = direction === 'toFavs' ? [main, favs] : [favs, main]
 
@@ -53,8 +54,14 @@ async function getDesserts() {
             // item.id is from the html originally generated after API was called
             // Below checks if id from allDesserts item is equal to the item from params[0] (one of the collections) - this makes the function apply only to the particular dessert
             if (item.id === id) {
+
                 // This var stores the value of item, even after it is removed. Nothing will be added to favs otherwise.
                 element = item;
+
+                // Change title of fav btn, depending on collection the corresponding item is in:
+                const titles = item.parentElement.id === 'desserts-container-homepage' ? ['Add to Favorites', 'Remove from Favorites'] : ['Remove from Favorites', 'Add to Favorites'];
+                let btn = item.firstChild.firstChild;
+                btn.title = titles[1]
 
                 // Remove item from particular collection:
                 item.remove();
@@ -64,7 +71,6 @@ async function getDesserts() {
 
                 // icon.classList returns an object like this: {0: 'icon', 1: 'fas', 2: 'fa-times'}
                 // So, access only the values of this object. If 'fa-heart' is included in these values, iconList is set to ['fa-heart', 'fa-times]. If not, it's set to ['fa-times', 'fa-heart']
-                console.log(icon.classList)
                 const iconList = Object.values(icon.classList).includes('fa-heart')
                     ? ['fa-heart', 'fa-times']
                     : ['fa-times', 'fa-heart'];
