@@ -18,8 +18,9 @@ async function getDesserts() {
 
     // POPULATE HOMEPAGE HERE
     for (let dessert of mainArray) {
+        //console.log(dessert)
         main.innerHTML +=
-        "<div class='dessert'>"
+        "<div id='" + dessert._id + "' class='dessert'>"
                 + "<div class='dessert-img-container'>"
                 + "<button class='fav-btn'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
@@ -35,34 +36,44 @@ async function getDesserts() {
     let favBtns = document.querySelectorAll('.fav-btn');
     console.log(favBtns);
 
-    favBtns.forEach((btn) => {
+    /* favBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
             console.log('hi')
             const direction = btn.parentElement.parentElement.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
             updateCollections(btn.id, direction);
         })
-    });
+    }); */
+
+    allDesserts.forEach((item) => {
+        //console.log(item.id)
+        item.addEventListener('click', () => {
+          const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
+          updateCollections(item.id, direction);
+        });
+      });
 
     const updateCollections = (id, direction) => {
-        // Directions to remove/append 'toFavs' 'toMain'
         let element;
-        const params = direction === 'toFavs' ? [main, favs] : [favs, main];
-
+        const params = direction === 'toFavs' ? [main, favs] : [favs, main]
+        //console.log(id)
 
         Object.values(params[0].children).map((item) => {
+            // This id is from the html originally generated after API was called
             if (item.id === id) {
-              element = item;
-              item.remove();
-              const icon = element.getElementsByClassName('icon')[0];
-              console.log(icon.classList);
-              const classesList = Object.values(icon.classList).includes(
-                'fa-heart'
-              )
-                ? ['fa-heart', 'fa-times']
-                : ['fa-times', 'fa-heart'];
-              icon.classList.remove(classesList[0]);
-              icon.classList.add(classesList[1]);
-              params[1].appendChild(element);
+                console.log(item)
+                element = item;
+                //console.log(element)
+                item.remove();
+                const icon = element.getElementsByClassName('icon')[0];
+                const iconList = Object.values(icon.classList).includes(
+                    'fa-heart'
+                )
+                    ? ['fa-heart', 'fa-times']
+                    : ['fa-times', 'fa-heart'];
+                icon.classList.remove(iconList[0]);
+                icon.classList.add(iconList[1]);
+                //console.log(element)
+                params[1].appendChild(element);
             }
           });
       };
