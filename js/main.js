@@ -1,81 +1,77 @@
-//const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?category=Ice_Cream&limit=24';
 const apiURL = 'https://freerandomapi.cyclic.app/api/v1/desserts?limit=200';
 
-let mainArray = [];
+let main = document.getElementById('desserts-container-homepage');
+let favs = document.getElementById('desserts-container-favs');
 
 // Add flavors from API to main array:
 async function getDesserts() {
     const response = await fetch(apiURL);
-    const allDessertsArr = await response.json();
+    let allDessertsArr = await response.json();
 
     // Add flavors to main array:
-    /* let mainArray = []; */
+    let mainArray = [];
     for (let i = 0; i < allDessertsArr.data.length; i+= 5) {
         mainArray.push(allDessertsArr.data[i]);
     }
     console.log(mainArray);
-}
-//getDesserts();
 
-// Function to populate homepage, favs modal:
-async function popSections() {
-    await getDesserts();
-    const dessertsHomepage = document.getElementById('desserts-container-homepage');
-    const dessertsFavs = document.getElementById('desserts-container-favs');
-
+    // POPULATE HOMEPAGE HERE
     for (let dessert of mainArray) {
-        // This consolidation can be seen around min 17 of Andrey's video
-        [dessertsHomepage, dessertsFavs].map((section) => {
-            // Params are equal to one of the arrays, depending on whether the section is dessertsHomepage or not
-            const params = section === dessertsHomepage
-            ? ['heart', 'Add to Favorites']
-            : ['times', 'Remove from Favorites'];
-            section.innerHTML += 
-            "<div class='dessert'>"
+        //console.log(dessert)
+        main.innerHTML +=
+        "<div id='" + dessert._id + "' class='dessert'>"
                 + "<div class='dessert-img-container'>"
-                + "<button class='favs-btn' title='" + params[1] + "'><i class='fas fa-" + params[0] + "'></i></button>"
+                + "<button class='fav-btn'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
                 + "</div>"
                 + "<header>" + dessert.name + "</header>"
                 + "<header> Category: " + dessert.category.replace(/_/g, ' ') + "</header>"
                 + "<p>" + dessert.description + "</p>"
             + "</div>"
-        });
     }
 
-    // ADD / DEL FROM HOMEPAGE, FAVS
-    // Should be async, awaiting popSections:
-    const allDesserts = document.querySelectorAll('.dessert');
-    const main = document.getElementById('desserts-container-homepage');
-    const favs = document.getElementById('desserts-container-favs');
-    // Get all fav btns:
-    const favBtns = document.querySelectorAll('.favs-btn');
+    let allDesserts = document.querySelectorAll('.dessert');
+    console.log(allDesserts);
+    let favBtns = document.querySelectorAll('.fav-btn');
+    console.log(favBtns);
 
-    // Add the event listener to each fav-btn to add/delete
     favBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-        const direction = btn.parentElement.parentElement.parentElement.id === 'main' ? 'toFavs' : 'toMain';
-        updateCollections(btn.id, direction);
-        console.log('hi')
-        });
+            console.log('hi')
+            item = btn.parentElement.parentElement;
+            const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
+            updateCollections(item.id, direction);
+        })
     });
 
-    // Function that updates collections:
     const updateCollections = (id, direction) => {
-        // Directions to remove/append 'toFavs' 'toMain'
         let element;
-        const params = direction === 'toFavs' ? [main, favs] : [favs, main];
-    
+        const params = direction === 'toFavs' ? [main, favs] : [favs, main]
+        //console.log(id)
+
         Object.values(params[0].children).map((item) => {
-        if (item.id === id) {
-            element = item;
-            item.remove();
-            params[1].appendChild(element);
-        }
-        });
-    };
+            // This id is from the html originally generated after API was called
+            // Below checks if id from allDesserts item is equal to the item from params[0] (one of the collections) - this makes the function apply only to the particular dessert
+            if (item.id === id) {
+                console.log(item)
+                element = item;
+                //console.log(element)
+                item.remove();
+                const icon = element.getElementsByClassName('icon')[0];
+                const iconList = Object.values(icon.classList).includes(
+                    'fa-heart'
+                )
+                    ? ['fa-heart', 'fa-times']
+                    : ['fa-times', 'fa-heart'];
+                icon.classList.remove(iconList[0]);
+                icon.classList.add(iconList[1]);
+                //console.log(element)
+                params[1].appendChild(element);
+            }
+          });
+      };
 }
-popSections();
+getDesserts();
 
 // FAV MODAL JS
 const modalOpen = '[data-open]';

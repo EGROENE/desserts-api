@@ -19,6 +19,17 @@
 
 body {
     background: url(../assets/kate-upton-bg.jpg);
+    font-family: 'Nerko One', cursive;
+}
+
+#pg-title-container {
+    background: rgba(0,0,0,0.8);
+    color: blue;
+    text-align: center;
+}
+
+#pg-title-container h2:hover {
+    cursor: pointer;
 }
 
 .desserts-container {
@@ -27,7 +38,6 @@ body {
     max-width: 100vw;
     gap: var(--size-12);
     color: white;
-    font-family: 'Nerko One', cursive;
 }
 
 .dessert {

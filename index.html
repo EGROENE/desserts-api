@@ -18,8 +18,10 @@
 </head>
 <body>
     <div id="content-container">
-        <h1>Here's a bunch of desserts. Which ones are your favorites?</h1>
-        <h2 data-open="favs">View your favorites</h2>
+        <div id="pg-title-container">
+            <h1>Here's a bunch of desserts. Which ones are your favorites?</h1>
+            <h2 data-open="favs">View your favorites</h2>
+        </div>
         <main>
             <div id="desserts-container-homepage" class='desserts-container'></div>
             <div id="favs" class="full-site-modal page-block" data-animation="zoomInOut">
@@ -36,7 +38,7 @@
                             <i class="fas fa-times" data-close></i>
                         </header>
                     </div>
-                    <div id="favs-modal-body"></div>
+                    <div id="desserts-container-favs" class="desserts-container"></div>
                 </div>
             </div>
         </main>
