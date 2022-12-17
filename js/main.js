@@ -19,7 +19,7 @@ async function getDesserts() {
     // Populate homepage:
     for (let dessert of mainArray) {
         main.innerHTML +=
-        "<div id='" + dessert._id + "' class='dessert'>"
+        "<div id='" + dessert._id + "' class='dessert' data-name='" + dessert.name + "'>"
                 + "<div class='dessert-img-container'>"
                 + "<button class='fav-btn' title='Add to Favorites'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
@@ -29,6 +29,7 @@ async function getDesserts() {
                 + "<p>" + dessert.description + "</p>"
             + "</div>"
     }
+    console.log(main.childNodes[0])
 
     // Get all favBtns, add EL for adding/removing functionality:
     let favBtns = document.querySelectorAll('.fav-btn');
@@ -65,6 +66,8 @@ async function getDesserts() {
 
                 // Remove item from particular collection:
                 item.remove();
+                console.log(document.getElementById('desserts-container-homepage').childNodes.length)
+                console.log(document.getElementById('desserts-container-favs').childNodes.length)
 
                 // Gets first element of 'element' that has class name 'icon':
                 const icon = element.getElementsByClassName('icon')[0];
@@ -86,6 +89,29 @@ async function getDesserts() {
             }
           });
       };
+
+      let sortBtnsHomepage = document.querySelectorAll('#sort-btns-container-homepage .sort-btn');
+      for (let btn of sortBtnsHomepage) {
+        btn.addEventListener('click', function() {
+            let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert')
+            console.log(mainDesserts)
+            let mainDessertsArray = Array.from(mainDesserts)
+            //console.log(mainDessertsArray)
+            // sort them using custom sort function
+            mainDessertsArray.sort(function(a, b) {
+                if ( a.dataset.name < b.dataset.name ){
+                    return -1;
+                }
+                if ( a.dataset.name > b.dataset.name ){
+                    return 1;
+                }
+                return 0;
+                // iterate and append again in new sorted order
+            }).forEach(function(ele) {
+                main.appendChild(ele);
+            })
+        })
+      }
 }
 getDesserts();
 
