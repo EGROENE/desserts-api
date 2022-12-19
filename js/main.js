@@ -38,7 +38,6 @@ async function getDesserts() {
             item = btn.parentElement.parentElement;
             // If id is 'desserts-container-array', toFavs set as the direction. Otherwise, toMain is set.
             const direction = item.parentElement.id === 'desserts-container-homepage' ? 'toFavs' : 'toMain';
-
             updateCollections(item.id, direction);
         })
     });
@@ -90,19 +89,25 @@ async function getDesserts() {
           });
       };
 
-      let sortBtnsHomepage = document.querySelectorAll('#sort-btns-container-homepage .sort-btn');
-      // params for btn go here
-      // see feedback vid if you can't figure out how to simplify these alpha functions
-      for (let btn of sortBtnsHomepage) {
-        btn.addEventListener('click', function() {
-            let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert')
-            console.log(mainDesserts)
-            let mainDessertsArray = Array.from(mainDesserts)
-            //console.log(mainDessertsArray)
-            // sort them using custom sort function
+      let sortBtnsAlpha = document.querySelectorAll('.sort-alpha');
+      console.log(sortBtnsAlpha);
+      let sortBtnsRevAlpha = document.querySelectorAll('.sort-rev-alpha');
+      
+      let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
+      let mainDessertsArray = Array.from(mainDesserts)
+      let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
+      let favDessertsArray = Array.from(favDesserts)
 
-            // if btn class includes sort-alpha class:
-            mainDessertsArray.sort(function(a, b) {
+      // see feedback vid if you can't figure out how to simplify these alpha functions
+      for (let btn of sortBtnsAlpha) {
+        let collectionDOMs = Object.values(btn.classList).includes('hp-sort-btn') ? [main, favs] : [favs, main];
+        let collectionArrays = Object.values(btn.classList).includes('hp-sort-btn') ? [mainDessertsArray, favDessertsArray] : [favDessertsArray, mainDessertsArray];
+
+        btn.addEventListener('click', function() {
+            console.log(collectionArrays[0]) // Why does this always equal the 'main' DOM?
+            console.log(collectionDOMs[1])
+            // Why does it add back ones that had been in favs, but not removed from favs? Why won't favs sorting work?
+            collectionArrays[0].sort(function(a, b) {
                 if ( a.dataset.name < b.dataset.name ){
                     return -1;
                 }
@@ -112,9 +117,8 @@ async function getDesserts() {
                 return 0;
                 // iterate and append again in new sorted order
             }).forEach(function(ele) {
-                main.appendChild(ele);
+                collectionDOMs[0].appendChild(ele);
             })
-            // if btn class includes sort-rev-alpha:
         })
       }
 }
