@@ -91,6 +91,8 @@ async function getDesserts() {
       };
 
       let sortBtnsHomepage = document.querySelectorAll('#sort-btns-container-homepage .sort-btn');
+      // params for btn go here
+      // see feedback vid if you can't figure out how to simplify these alpha functions
       for (let btn of sortBtnsHomepage) {
         btn.addEventListener('click', function() {
             let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert')
@@ -98,6 +100,8 @@ async function getDesserts() {
             let mainDessertsArray = Array.from(mainDesserts)
             //console.log(mainDessertsArray)
             // sort them using custom sort function
+
+            // if btn class includes sort-alpha class:
             mainDessertsArray.sort(function(a, b) {
                 if ( a.dataset.name < b.dataset.name ){
                     return -1;
@@ -110,6 +114,7 @@ async function getDesserts() {
             }).forEach(function(ele) {
                 main.appendChild(ele);
             })
+            // if btn class includes sort-rev-alpha:
         })
       }
 }
