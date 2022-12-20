@@ -89,40 +89,46 @@ async function getDesserts() {
           });
       };
       
+      // Get all sort buttons so that an event listener can be added to each one:
       let allSortBtns = document.querySelectorAll('.sort-btn');
-      let sortBtnsAlpha = document.querySelectorAll('.sort-alpha');
-      let sortBtnsRevAlpha = document.querySelectorAll('.sort-rev-alpha');
       
       for (let btn of allSortBtns) {
-
         btn.addEventListener('click', function() {
+            // Get each collection's DOM:
             let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
-            let mainDessertsArray = Array.from(mainDesserts);
             let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
+
+            // Make desserts in each collection's DOM into an iterable array - this will be resorted & whose sorted items will be appended to appropriate collection:
+            let mainDessertsArray = Array.from(mainDesserts);
             let favDessertsArray = Array.from(favDesserts);
             
+            // If the btn's classlist contains class pertaining to the homepage sort btns, the main DOM & an iterable array of the desserts it contains is set as the first item in two arrays, one containing the DOMs, the other the desserts in the corresponding DOM.
+            // If the btn's classlist contains a class pertaining to the fav modal sort btns the favs DOM & the desserts it contains is set as the first item in these two arrays.
+            // The first index of collectionArrays is what will be sorted.
+            // The first index of collectionDOMs is what will be populated by the elements in collectionArrays[0].
             let collectionDOMs = Object.values(btn.classList).includes('hp-sort-btn') ? [main, favs] : [favs, main];
             let collectionArrays = Object.values(btn.classList).includes('hp-sort-btn') ? [mainDessertsArray, favDessertsArray] : [favDessertsArray, mainDessertsArray];
-            console.log(collectionArrays) // Why desserts added to favs not get pushed to favDessertsArray?
-            console.log(collectionDOMs)
-            // Why does it add back ones that had been in favs, but not removed from favs? Why won't favs sorting work?
+
+            // Sort items in desserts array for corresponding collection:
             collectionArrays[0].sort(function(a, b) {
                 if ( a.dataset.name < b.dataset.name ){
+                    // Sort alphabetically:
                     if (Object.values(btn.classList).includes('sort-alpha')) {
                         return -1;
-                    } else {
+                    } else { // Sort reverse-alphabetically:
                         return 1;
                     }
                 }
                 if ( a.dataset.name > b.dataset.name ){
+                    // Sort alphabetically:
                     if (Object.values(btn.classList).includes('sort-alpha')) {
                         return 1;
-                    } else {
+                    } else { // Sort reverse-alphabetically:
                         return -1;
                     }
                 }
                 return 0;
-                // iterate and append again in new sorted order
+                // Append resorted desserts to appropriate collection:
             }).forEach(function(ele) {
                 collectionDOMs[0].appendChild(ele);
             })
