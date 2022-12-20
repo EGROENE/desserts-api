@@ -88,24 +88,24 @@ async function getDesserts() {
             }
           });
       };
-
+      
       let sortBtnsAlpha = document.querySelectorAll('.sort-alpha');
       console.log(sortBtnsAlpha);
       let sortBtnsRevAlpha = document.querySelectorAll('.sort-rev-alpha');
       
-      let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
-      let mainDessertsArray = Array.from(mainDesserts)
-      let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
-      let favDessertsArray = Array.from(favDesserts)
-
       // see feedback vid if you can't figure out how to simplify these alpha functions
       for (let btn of sortBtnsAlpha) {
-        let collectionDOMs = Object.values(btn.classList).includes('hp-sort-btn') ? [main, favs] : [favs, main];
-        let collectionArrays = Object.values(btn.classList).includes('hp-sort-btn') ? [mainDessertsArray, favDessertsArray] : [favDessertsArray, mainDessertsArray];
-
-        btn.addEventListener('click', function() {
-            console.log(collectionArrays[0]) // Why does this always equal the 'main' DOM?
-            console.log(collectionDOMs[1])
+          
+          btn.addEventListener('click', function() {
+            let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
+            let mainDessertsArray = Array.from(mainDesserts)
+            let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
+            let favDessertsArray = Array.from(favDesserts)
+            
+            let collectionDOMs = Object.values(btn.classList).includes('hp-sort-btn') ? [main, favs] : [favs, main];
+            let collectionArrays = Object.values(btn.classList).includes('hp-sort-btn') ? [mainDessertsArray, favDessertsArray] : [favDessertsArray, mainDessertsArray];
+            console.log(collectionArrays) // Why desserts added to favs not get pushed to favDessertsArray?
+            console.log(collectionDOMs)
             // Why does it add back ones that had been in favs, but not removed from favs? Why won't favs sorting work?
             collectionArrays[0].sort(function(a, b) {
                 if ( a.dataset.name < b.dataset.name ){
