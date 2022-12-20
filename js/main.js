@@ -19,7 +19,7 @@ async function getDesserts() {
     // Populate homepage:
     for (let dessert of mainArray) {
         main.innerHTML +=
-        "<div id='" + dessert._id + "' class='dessert' data-name='" + dessert.name + "'>"
+        "<div id='" + dessert._id + "' class='dessert' data-name='" + dessert.name + "' data-category='" + dessert.category + "'>"
                 + "<div class='dessert-img-container'>"
                 + "<button class='fav-btn' title='Add to Favorites'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
@@ -134,6 +134,12 @@ async function getDesserts() {
             })
         })
       }
+
+      // Functionality to display totals:
+      const totalsAreaHomepage = document.getElementById('totals-area-homepage');
+      const totalsAreaFavs = document.getElementById('totals-area-favs');
+
+      
 }
 getDesserts();
 
