@@ -89,18 +89,17 @@ async function getDesserts() {
           });
       };
       
+      let allSortBtns = document.querySelectorAll('.sort-btn');
       let sortBtnsAlpha = document.querySelectorAll('.sort-alpha');
-      console.log(sortBtnsAlpha);
       let sortBtnsRevAlpha = document.querySelectorAll('.sort-rev-alpha');
       
-      // see feedback vid if you can't figure out how to simplify these alpha functions
-      for (let btn of sortBtnsAlpha) {
-          
-          btn.addEventListener('click', function() {
+      for (let btn of allSortBtns) {
+
+        btn.addEventListener('click', function() {
             let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
-            let mainDessertsArray = Array.from(mainDesserts)
+            let mainDessertsArray = Array.from(mainDesserts);
             let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
-            let favDessertsArray = Array.from(favDesserts)
+            let favDessertsArray = Array.from(favDesserts);
             
             let collectionDOMs = Object.values(btn.classList).includes('hp-sort-btn') ? [main, favs] : [favs, main];
             let collectionArrays = Object.values(btn.classList).includes('hp-sort-btn') ? [mainDessertsArray, favDessertsArray] : [favDessertsArray, mainDessertsArray];
@@ -109,10 +108,18 @@ async function getDesserts() {
             // Why does it add back ones that had been in favs, but not removed from favs? Why won't favs sorting work?
             collectionArrays[0].sort(function(a, b) {
                 if ( a.dataset.name < b.dataset.name ){
-                    return -1;
+                    if (Object.values(btn.classList).includes('sort-alpha')) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 }
                 if ( a.dataset.name > b.dataset.name ){
-                    return 1;
+                    if (Object.values(btn.classList).includes('sort-alpha')) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 }
                 return 0;
                 // iterate and append again in new sorted order
