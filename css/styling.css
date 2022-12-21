@@ -26,12 +26,18 @@ body {
 
 #pg-title-container {
     background: rgba(0,0,0,0.8);
-    color: blue;
+    color: hotpink;
     text-align: center;
 }
 
 #pg-title-container h2:hover {
     cursor: pointer;
+}
+
+h2:hover {
+    color: pink;
+    cursor: pointer;
+    transition: 300ms;
 }
 
 .desserts-container {
