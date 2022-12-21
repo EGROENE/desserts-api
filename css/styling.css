@@ -55,6 +55,11 @@ h2:hover {
     opacity: 0.5;
 }
 
+.sort-btn:disabled {
+    cursor: default;
+    opacity: 0.2;
+}
+
 .desserts-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
