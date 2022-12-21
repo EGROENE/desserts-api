@@ -82,7 +82,9 @@ body {
 
 /* MODAL JS STYLING */
 .page-block {
-    background-color: rebeccapurple;
+    background: url(../assets/bg-two.jpg);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .modal {
