@@ -37,6 +37,7 @@ async function getDesserts() {
         // Reset HTML whenever called:
         totalsAreaHomepage.innerHTML = ''
         totalsAreaFavs.innerHTML = ''
+        // Display section header at all times:
         totalsAreaHomepage.innerHTML += "<header>Category Totals</header>"
         totalsAreaFavs.innerHTML += "<header>Category Totals</header>"
 
@@ -45,11 +46,12 @@ async function getDesserts() {
         let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
 
         // Function to remove duplicates:
+        // one way:
         /* function removeDuplicates(arr) {
             return arr.filter((item, 
                 index) => arr.indexOf(item) === index);
         } */
-        
+        // another way:
         function removeDuplicates(arr) {
             return [...new Set(arr)];
         }
@@ -65,7 +67,7 @@ async function getDesserts() {
 
         // Initialize tally for each unique category (item in filtered array):
         // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
-        // Ask Andrey if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
+        // Ask if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
         let cookieTotalMain = 0;
         let donutTotalMain = 0;
         let icecreamTotalMain = 0;
@@ -110,7 +112,7 @@ async function getDesserts() {
 
         // Initialize tally for each unique category (item in filtered array):
         // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
-        // Ask Andrey if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
+        // Ask if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
         let cookieTotalFavs = 0;
         let donutTotalFavs = 0;
         let icecreamTotalFavs = 0;
