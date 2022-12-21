@@ -159,8 +159,21 @@ async function getDesserts() {
         })
     });
 
+    // Get all sort buttons so that an event listener can be added to each one:
+    let allSortBtns = document.querySelectorAll('.sort-btn');
+
+    // Individual btns, for purpose of disabling/enabling again at appropriate times:
+    let homepageAlphaSortBtn = document.getElementById('hp-alpha-sort-btn');
+    let homepageRevAlphaSortBtn = document.getElementById('hp-rev-alpha-sort-btn');
+    let favsAlphaSortBtn = document.getElementById('favs-alpha-sort-btn');
+    let favsRevAlphaSortBtn = document.getElementById('favs-rev-alpha-sort-btn');
+
     // Function that adds/removes the individual desserts from collections:
     const updateCollections = (id, direction) => {
+        for (btn of allSortBtns) {
+            btn.disabled = false;
+        }
+        
         let element; // see element = item below
 
         // If direction is toFavs, [main, favs] are the params, and vice versa:
@@ -206,15 +219,6 @@ async function getDesserts() {
             }
           });
       };
-      
-      // Get all sort buttons so that an event listener can be added to each one:
-      let allSortBtns = document.querySelectorAll('.sort-btn');
-
-      // Individual btns, for purpose of disabling/enabling again at appropriate times:
-      let homepageAlphaSortBtn = document.getElementById('hp-alpha-sort-btn');
-      let homepageRevAlphaSortBtn = document.getElementById('hp-rev-alpha-sort-btn');
-      let favsAlphaSortBtn = document.getElementById('favs-alpha-sort-btn');
-      let favsRevAlphaSortBtn = document.getElementById('favs-rev-alpha-sort-btn');
       
       for (let btn of allSortBtns) {
         btn.addEventListener('click', function() {
