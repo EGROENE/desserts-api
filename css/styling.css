@@ -18,8 +18,10 @@
 }
 
 body {
-    background: url(../assets/kate-upton-bg.jpg);
+    background: url(../assets/bg-one.jpg);
     font-family: 'Nerko One', cursive;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 #pg-title-container {
