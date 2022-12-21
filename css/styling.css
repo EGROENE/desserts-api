@@ -28,6 +28,7 @@ body {
     background: rgba(0,0,0,0.8);
     color: hotpink;
     text-align: center;
+    letter-spacing: 3px;
 }
 
 #pg-title-container h2:hover {
