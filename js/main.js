@@ -19,7 +19,7 @@ async function getDesserts() {
     // Populate homepage:
     for (let dessert of mainArray) {
         main.innerHTML +=
-        "<div id='" + dessert._id + "' class='dessert' data-name='" + dessert.name + "' data-category='" + dessert.category + "'>"
+        "<div id='" + dessert._id + "' class='dessert' data-name='" + dessert.name + "' data-category='" + dessert.category.toLowerCase().replace(/_/g, '-') + "'>"
                 + "<div class='dessert-img-container'>"
                 + "<button class='fav-btn' title='Add to Favorites'><i class='icon fas fa-heart'></i></button>"
                 + "<img src='" + dessert.photoUrl + "'>"
@@ -29,7 +29,122 @@ async function getDesserts() {
                 + "<p>" + dessert.description + "</p>"
             + "</div>"
     }
-    console.log(main.childNodes[0])
+    const getCategoryTotals = () => {
+        // Functionality to display totals:
+        const totalsAreaHomepage = document.getElementById('totals-area-homepage');
+        const totalsAreaFavs = document.getElementById('totals-area-favs');
+
+        // Reset HTML whenever called:
+        totalsAreaHomepage.innerHTML = ''
+        totalsAreaFavs.innerHTML = ''
+        totalsAreaHomepage.innerHTML += "<header>Category Totals</header>"
+        totalsAreaFavs.innerHTML += "<header>Category Totals</header>"
+
+        // Get each collection's DOM:
+        let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
+        let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
+
+        // Function to remove duplicates:
+        /* function removeDuplicates(arr) {
+            return arr.filter((item, 
+                index) => arr.indexOf(item) === index);
+        } */
+        
+        function removeDuplicates(arr) {
+            return [...new Set(arr)];
+        }
+
+        // Categories in main collection:
+        let categoriesArrayMain = [];
+        for (let dessert of mainDesserts) {
+            categoriesArrayMain.push(dessert.dataset.category.toLowerCase().replace(/_/g, ''));
+        }
+        console.log(categoriesArrayMain);
+        let categoriesArrayMainFiltered = removeDuplicates(categoriesArrayMain);
+        console.log(categoriesArrayMainFiltered);
+
+        // Initialize tally for each unique category (item in filtered array):
+        // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
+        // Ask Andrey if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
+        let cookieTotalMain = 0;
+        let donutTotalMain = 0;
+        let icecreamTotalMain = 0;
+        
+        // Find how many times each item in filtered array appears in unfiltered array:        
+        // Or, see how many elems currently in DOM have data-category matching each category in filtered array:
+        for (let dessert of mainDesserts) {
+            if (dessert.dataset.category === 'cookie') {
+                cookieTotalMain += 1;
+            }
+            if (dessert.dataset.category === 'donut') {
+                donutTotalMain += 1;
+            }
+            if (dessert.dataset.category === 'ice-cream') {
+                icecreamTotalMain += 1;
+            }
+        }
+
+        // Display title in totals section for each item in filtered array:
+        for (let category of categoriesArrayMainFiltered) {
+            let categoryTotal;
+            if (category === 'cookie') {
+                categoryTotal = cookieTotalMain;   
+            }
+            if (category === 'donut') {
+                categoryTotal = donutTotalMain;   
+            }
+            if (category === 'ice-cream') {
+                categoryTotal = icecreamTotalMain;   
+            }
+            totalsAreaHomepage.innerHTML += "<p>" + category.replace(/-/g, ' ') + ": " + categoryTotal + "</p>";
+        }
+        
+        // Categories in favs collection:
+        let categoriesArrayFavs = [];
+        for (let dessert of favDesserts) {
+            categoriesArrayFavs.push(dessert.dataset.category.toLowerCase().replace(/_/g, ' '));
+        }
+        console.log(categoriesArrayFavs);
+        let categoriesArrayFavsFiltered = removeDuplicates(categoriesArrayFavs);
+        console.log(categoriesArrayFavsFiltered);
+
+        // Initialize tally for each unique category (item in filtered array):
+        // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
+        // Ask Andrey if there is a way to dynamically create variables (tally vars below), or another way to count categories automatically if more are added in the future.
+        let cookieTotalFavs = 0;
+        let donutTotalFavs = 0;
+        let icecreamTotalFavs = 0;
+        
+        // Find how many times each item in filtered array appears in unfiltered array:        
+        // Or, see how many elems currently in DOM have data-category matching each category in filtered array:
+        for (let dessert of favDesserts) {
+            if (dessert.dataset.category === 'cookie') {
+                cookieTotalFavs += 1;
+            }
+            if (dessert.dataset.category === 'donut') {
+                donutTotalFavs += 1;
+            }
+            if (dessert.dataset.category === 'ice-cream') {
+                icecreamTotalFavs += 1;
+            }
+        }
+
+        // Display title in totals section for each item in filtered array:
+        for (let category of categoriesArrayFavsFiltered) {
+            let categoryTotal;
+            if (category === 'cookie') {
+                categoryTotal = cookieTotalFavs;   
+            }
+            if (category === 'donut') {
+                categoryTotal = donutTotalFavs;   
+            }
+            if (category === 'ice-cream') {
+                categoryTotal = icecreamTotalFavs;   
+            }
+            totalsAreaFavs.innerHTML += "<p>" + category.replace(/-/g, ' ') + ": " + categoryTotal + "</p>"
+        }
+    }
+    getCategoryTotals();
 
     // Get all favBtns, add EL for adding/removing functionality:
     let favBtns = document.querySelectorAll('.fav-btn');
@@ -65,8 +180,6 @@ async function getDesserts() {
 
                 // Remove item from particular collection:
                 item.remove();
-                console.log(document.getElementById('desserts-container-homepage').childNodes.length)
-                console.log(document.getElementById('desserts-container-favs').childNodes.length)
 
                 // Gets first element of 'element' that has class name 'icon':
                 const icon = element.getElementsByClassName('icon')[0];
@@ -85,6 +198,9 @@ async function getDesserts() {
 
                 // Element is added to either main or favs, depending again on the direction (see 1st part of updateCollections())
                 params[1].appendChild(element);
+
+                // Display updated category totals after adding/removing items:
+                getCategoryTotals();
             }
           });
       };
@@ -95,6 +211,7 @@ async function getDesserts() {
       for (let btn of allSortBtns) {
         btn.addEventListener('click', function() {
             // Get each collection's DOM:
+            // Must be inside this EL so the DOMs are current when btn is clicked
             let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
             let favDesserts = document.querySelectorAll('#desserts-container-favs .dessert');
 
@@ -134,12 +251,6 @@ async function getDesserts() {
             })
         })
       }
-
-      // Functionality to display totals:
-      const totalsAreaHomepage = document.getElementById('totals-area-homepage');
-      const totalsAreaFavs = document.getElementById('totals-area-favs');
-
-      
 }
 getDesserts();
 
