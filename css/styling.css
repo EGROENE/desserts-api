@@ -153,6 +153,10 @@ h2:hover {
     justify-content: space-between;
 }
 
+.modal-header i:hover {
+    cursor: pointer;
+}
+
 .modal-header h3 {
     color: var(--color-text-base);
     font-family: 'Potterfont', serif;
