@@ -209,9 +209,41 @@ async function getDesserts() {
       
       // Get all sort buttons so that an event listener can be added to each one:
       let allSortBtns = document.querySelectorAll('.sort-btn');
+
+      // Individual btns, for purpose of disabling/enabling again at appropriate times:
+      let homepageAlphaSortBtn = document.getElementById('hp-alpha-sort-btn');
+      let homepageRevAlphaSortBtn = document.getElementById('hp-rev-alpha-sort-btn');
+      let favsAlphaSortBtn = document.getElementById('favs-alpha-sort-btn');
+      let favsRevAlphaSortBtn = document.getElementById('favs-rev-alpha-sort-btn');
       
       for (let btn of allSortBtns) {
         btn.addEventListener('click', function() {
+            // Disable/enable certain btns onclick:
+            if (btn === homepageAlphaSortBtn) {
+                if (homepageRevAlphaSortBtn.disabled) {
+                    homepageRevAlphaSortBtn.disabled = false;
+                }
+                homepageAlphaSortBtn.disabled = true;
+            }
+            if (btn === homepageRevAlphaSortBtn) {
+                if (homepageAlphaSortBtn.disabled) {
+                    homepageAlphaSortBtn.disabled = false;
+                }
+                homepageRevAlphaSortBtn.disabled = true;
+            }
+            if (btn ===favsAlphaSortBtn) {
+                if (favsRevAlphaSortBtn.disabled) {
+                favsRevAlphaSortBtn.disabled = false;
+                }
+            favsAlphaSortBtn.disabled = true;
+            }
+            if (btn ===favsRevAlphaSortBtn) {
+                if (favsAlphaSortBtn.disabled) {
+                favsAlphaSortBtn.disabled = false;
+                }
+            favsRevAlphaSortBtn.disabled = true;
+            }
+
             // Get each collection's DOM:
             // Must be inside this EL so the DOMs are current when btn is clicked
             let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
