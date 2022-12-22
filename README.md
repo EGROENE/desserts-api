@@ -3,7 +3,7 @@ This was a project I completed as part of the Devslopes Web Academy. We were to 
 
 Here's a list of the project requirements:
 1. Fetch data from an API (resource provided below) and display up to 30 items from that request in your HTML.
-  * In your HTML, display the array of data you get back (i.e. if it was an array of movies, you would display the list of movies)
+    * In your HTML, display the array of data you get back (i.e. if it was an array of movies, you would display the list of movies)
   * Display a minimum of 3 values from the object in the array of data you get back for each item. (i.e. movie name, movie description, cover image)
 2. HTML for each item should be created programmatically. This means the HTML is created based on the data received from the API - if 10 items are fetched, 10 blocks of HTML are created to display the data, etc.
 3. Build a function to add selected items from the array of data to a "favorites" list. i.e.:
