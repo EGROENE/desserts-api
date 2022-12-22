@@ -24,7 +24,9 @@ body {
     background-attachment: fixed;
 }
 
-#pg-title-container {
+#pg-title-container,
+#totals-area-homepage,
+#modal-header-container {
     background: rgba(0,0,0,0.8);
     color: hotpink;
     text-align: center;
@@ -106,6 +108,27 @@ h2:hover {
     /* height: var(--size-256); */
 }
 
+#totals-area-homepage,
+#totals-area-favs {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: var(--size-28);
+    position: sticky;
+    bottom: var(--size-8);
+    margin-top: var(--size-8);
+    width: 100%;
+    max-width: 100%;
+}
+
+#totals-area-homepage header {
+    color: yellow;
+}
+
+#totals-area-homepage p {
+    color: peachpuff;
+}
+
 /* MODAL JS STYLING */
 .page-block {
     background: url(../assets/bg-two.jpg);
@@ -158,12 +181,30 @@ h2:hover {
 }
 
 .modal-header h3 {
-    color: var(--color-text-base);
-    font-family: 'Potterfont', serif;
+    color: lightgreen;
+    font-size: var(--size-32);
 }
 
-.modal-header .header-sort-btns-container {
+.modal-header .header-content-container {
     text-align: left;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#totals-area-favs h3 {
+    color: lightgreen;
+}
+
+#totals-area-favs header {
+    color: lightcoral;
+}
+
+#totals-area-favs p {
+    color: lightskyblue;
+    margin: 0;
 }
 
 .favs-house-totals-container {
@@ -173,6 +214,10 @@ h2:hover {
     justify-content: space-evenly;
     align-items: center;
     margin: var(--size-8) 0 -1.5rem 0;
+}
+
+.sort-btns-container-favs {
+    margin: var(--size-24) 0;
 }
 
 .modal-header .fa-times {
