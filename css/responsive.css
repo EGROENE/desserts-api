@@ -1,0 +1,32 @@
+@media screen and (max-width: 962px) {
+    .desserts-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 810px) {
+    .desserts-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 601px) {
+    #totals-area-homepage, 
+    #totals-area-favs {
+        flex-direction: column;
+    }
+    
+    #totals-area-homepage p {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .desserts-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #totals-area-homepage {
+        position: relative;
+    }
+}

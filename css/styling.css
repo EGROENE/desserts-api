@@ -33,6 +33,10 @@ body {
     letter-spacing: 3px;
 }
 
+#pg-title-container {
+    padding: var(--size-16) var(--size-12);
+}
+
 #pg-title-container h2:hover {
     cursor: pointer;
 }
@@ -68,6 +72,7 @@ h2:hover {
     max-width: 100vw;
     gap: var(--size-12);
     color: white;
+    margin: var(--size-12);
 }
 
 .dessert {
@@ -199,11 +204,11 @@ h2:hover {
 }
 
 #totals-area-favs header {
-    color: lightcoral;
+    color: aqua;
 }
 
 #totals-area-favs p {
-    color: lightskyblue;
+    color: mediumorchid;
     margin: 0;
 }
 
