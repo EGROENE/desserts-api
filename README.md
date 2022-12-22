@@ -1,7 +1,7 @@
 ﻿# ice-cream-api
-This was a project I completed as part of the Devslopes Web Academy. We were to use only HTML, CSS, & vanilla JS & the purpose was to practice manipulating DOM elements.
+This was a project I completed as part of the Devslopes Web Academy. We were to use only HTML, CSS, & vanilla JS & the purpose was to practice manipulating DOM elements, in that the user can add items that display from an API call, back and forth from the homepage & a separate collection, as well as sort the items alphabetically & reverse-alphabetically, & see a tally of items with a certain characteristic displayed in both collections.
 
-Here's a list of the project requirements:
+Here's a complete list of the project requirements:
 1. Fetch data from an API (resource provided below) and display up to 30 items from that request in your HTML.
     * In your HTML, display the array of data you get back (i.e. if it was an array of movies, you would display the list of movies)
     * Display a minimum of 3 values from the object in the array of data you get back for each item. (i.e. movie name, movie description, cover image)
