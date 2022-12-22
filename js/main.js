@@ -38,8 +38,8 @@ async function getDesserts() {
         totalsAreaHomepage.innerHTML = ''
         totalsAreaFavs.innerHTML = ''
         // Display section header at all times:
-        totalsAreaHomepage.innerHTML += "<header>Category Totals</header>"
-        totalsAreaFavs.innerHTML += "<header>Category Totals</header>"
+        totalsAreaHomepage.innerHTML += "<header>Category Totals:</header>"
+        totalsAreaFavs.innerHTML += "<header>Category Totals:</header>"
 
         // Get each collection's DOM:
         let mainDesserts = document.querySelectorAll('#desserts-container-homepage .dessert');
@@ -214,7 +214,7 @@ async function getDesserts() {
                 // Element is added to either main or favs, depending again on the direction (see 1st part of updateCollections())
                 params[1].appendChild(element);
 
-                // Display updated category totals after adding/removing items:
+                // Display updated Category Totals: after adding/removing items:
                 getCategoryTotals();
             }
           });
