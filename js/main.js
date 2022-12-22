@@ -61,9 +61,7 @@ async function getDesserts() {
         for (let dessert of mainDesserts) {
             categoriesArrayMain.push(dessert.dataset.category.toLowerCase().replace(/_/g, ''));
         }
-        console.log(categoriesArrayMain);
         let categoriesArrayMainFiltered = removeDuplicates(categoriesArrayMain);
-        console.log(categoriesArrayMainFiltered);
 
         // Initialize tally for each unique category (item in filtered array):
         // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
@@ -106,9 +104,7 @@ async function getDesserts() {
         for (let dessert of favDesserts) {
             categoriesArrayFavs.push(dessert.dataset.category.toLowerCase().replace(/_/g, ' '));
         }
-        console.log(categoriesArrayFavs);
         let categoriesArrayFavsFiltered = removeDuplicates(categoriesArrayFavs);
-        console.log(categoriesArrayFavsFiltered);
 
         // Initialize tally for each unique category (item in filtered array):
         // If more categories are added, log the filtered array to the console & add corresponding vars for the new categories. Also add them to the logic statements below.
