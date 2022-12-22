@@ -179,6 +179,7 @@ h2:hover {
     display: flex;
     padding-bottom: 1rem;
     justify-content: space-between;
+    padding: var(--size-12);
 }
 
 .modal-header i:hover {
