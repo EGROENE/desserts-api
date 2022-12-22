@@ -1,4 +1,4 @@
-﻿# ice-cream-api
+﻿#desserts-api
 This was a project I completed as part of the Devslopes Web Academy. We were to use only HTML, CSS, & vanilla JS & the purpose was to practice manipulating DOM elements, in that the user can add items that display from an API call, back and forth from the homepage & a separate collection, as well as sort the items alphabetically & reverse-alphabetically, & see a tally of items with a certain characteristic displayed in both collections.
 
 Here's a complete list of the project requirements:
